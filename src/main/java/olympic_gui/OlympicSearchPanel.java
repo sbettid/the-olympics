@@ -3,13 +3,19 @@ package olympic_gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -17,7 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
+
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONArray;
 
@@ -93,25 +103,25 @@ public class OlympicSearchPanel extends JPanel{
 		// Create panel which contains all the components with a Box Layout
 		olympicPanel = new JPanel();
 		olympicPanel.setLayout(new BoxLayout(olympicPanel, BoxLayout.Y_AXIS));
-		olympicPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+		olympicPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		// title panel
 		titlePanel = new JPanel();
 		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		title = new JLabel("The Olympics");
 		title.setFont((new Font("Helvetica", Font.BOLD, 45)));
-		//image1 = new JLabel();
-		//image1.setIcon(new ImageIcon("icons/reversemovie.png"));
-		//titlePanel.add(image1);
-		//titlePanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		JLabel image1 = new JLabel();
+		image1.setIcon(new ImageIcon("icons/olympic-games.png"));
+		titlePanel.add(image1);
+		titlePanel.add(Box.createRigidArea(new Dimension(50, 0)));
 		titlePanel.add(title);
-		//titlePanel.add(Box.createRigidArea(new Dimension(50, 0)));
-		//image2 = new JLabel();
-		//image2.setIcon(new ImageIcon("icons/clapperboard.png"));
-		//titlePanel.add(image2);
+		titlePanel.add(Box.createRigidArea(new Dimension(50, 0)));
+		JLabel image2 = new JLabel();
+		image2.setIcon(new ImageIcon("icons/olympic-games.png"));
+		titlePanel.add(image2);
 
 		olympicPanel.add(titlePanel);
-		olympicPanel.add(Box.createRigidArea(new Dimension(0, 35)));
+		olympicPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 		
 		
 		// ScrolledPane
@@ -126,7 +136,51 @@ public class OlympicSearchPanel extends JPanel{
             	return false;               
 		}};
 		olympicJTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//olympicJList.addListSelectionListener(new ListListener());
+		olympicJTable.setAutoCreateRowSorter(true);
+		olympicJTable.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.getClickCount() == 2) {
+					int row = olympicJTable.rowAtPoint(arg0.getPoint());
+					int year = (int)olympicJTable.getValueAt(row, 1);
+					String type = (String)olympicJTable.getValueAt(row, 2);
+					String city = (String)olympicJTable.getValueAt(row, 0);
+					System.out.print(year + type);
+					
+					OlympicGamePanel op = new OlympicGamePanel(year, type, city);
+					MainPanel.getMainPanel().swapPanel(op);
+				}
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});;
 		
 		scrollPanel = new JPanel();
 		scrollPane = new JScrollPane(olympicJTable);
@@ -174,13 +228,40 @@ public class OlympicSearchPanel extends JPanel{
 		comboPanel.add(s3);
 		comboPanel.setBorder(BorderFactory.createEtchedBorder());
 
-		
 		olympicPanel.add(comboPanel);
 		olympicPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		
 		
 		JPanel filterPanel = new JPanel();
 		JButton filter = new JButton("Filter");
+		filter.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String combo1 = (String)citiesCB.getSelectedItem();
+				String combo2 = (String)yearCB.getSelectedItem();
+				String combo3 = (String)typeCB.getSelectedItem();
+				((TableRowSorter) olympicJTable.getRowSorter()).setRowFilter(null);
+				
+				List<RowFilter<Object,Object>> rfs = new ArrayList<>();
+				//check for All
+				if (!combo1.equals("All")) {
+					rfs.add(RowFilter.regexFilter(combo1, 0));
+				}
+				if (!combo2.equals("All")) {
+					rfs.add(RowFilter.regexFilter(combo2, 1));
+				}
+				if (!combo3.equals("All")) {
+					rfs.add(RowFilter.regexFilter(combo3, 2));
+				}
+				
+				RowFilter<Object, Object> ref = RowFilter.andFilter(rfs);
+				
+				((TableRowSorter) olympicJTable.getRowSorter()).setRowFilter(ref);;
+				
+			}
+			
+		});
 		filterPanel.add(filter);
 		olympicPanel.add(filterPanel);
 		
