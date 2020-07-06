@@ -110,7 +110,8 @@ public class OlympicGamePanel extends JPanel{
 		JPanel descriptionP = new JPanel();
 		descriptionP.setLayout(new BorderLayout());
 		
-		JLabel left = new JLabel("Prova");
+		JLabel left = new JLabel("General Information");
+		left.setFont((new Font("Helvetica", Font.BOLD, 14)));
 		JLabel right = new JLabel("Prova2");
 		
 		descriptionP.add(left, BorderLayout.WEST);
@@ -128,20 +129,33 @@ public class OlympicGamePanel extends JPanel{
 		JPanel sub0 = new JPanel();
 		sub0.setLayout(new BoxLayout(sub0, BoxLayout.X_AXIS));
 		sub0.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon0 = new JLabel();
+		if (type.contains("winter"))
+			icon0.setIcon(new ImageIcon("icons/snow.png"));
+		else 
+			icon0.setIcon(new ImageIcon("icons/sun.png"));
 		JLabel typeL = new JLabel("Type: " + type);
+		sub0.add(icon0);
+		sub0.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub0.add(typeL);
 		
 		// path
 		JPanel subC = new JPanel();
 		subC.setLayout(new BoxLayout(subC, BoxLayout.X_AXIS));
 		subC.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel iconC = new JLabel();
+		iconC.setIcon(new ImageIcon("icons/country/"+ resultsGeneral.getJSONObject(0).getJSONObject("noc").getString("value")+".png"));
 		JLabel countryLabel = new JLabel("Country: " + resultsGeneral.getJSONObject(0).getJSONObject("country").getString("value"));
+		subC.add(iconC);
+		subC.add(Box.createRigidArea(new Dimension(10, 0)));
 		subC.add(countryLabel);
 		
 		// length
 		JPanel sub1 = new JPanel();
 		sub1.setLayout(new BoxLayout(sub1, BoxLayout.X_AXIS));
 		sub1.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon1 = new JLabel();
+		icon1.setIcon(new ImageIcon("icons/search.png"));
 		JLabel web = new JLabel("<html>Website: <a href=\"" + 
 		resultsGeneral.getJSONObject(0).getJSONObject("website").getString("value") + "\">Click here</a></html>");
 		web.addMouseListener(new MouseAdapter() {
@@ -158,12 +172,16 @@ public class OlympicGamePanel extends JPanel{
 				
 			}
 		});
+		sub1.add(icon1);
+		sub1.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub1.add(web);
 		
 		// deleted
 		JPanel sub6 = new JPanel();
 		sub6.setLayout(new BoxLayout(sub6, BoxLayout.X_AXIS));
 		sub6.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon6 = new JLabel();
+		icon6.setIcon(new ImageIcon("icons/money.png"));
 		double cost = 0.0;
 		if(!costQ.isEmpty()) {
 			
@@ -176,7 +194,8 @@ public class OlympicGamePanel extends JPanel{
 			costL = new JLabel("Cost (in billions $): NA");
 		else
 			costL = new JLabel("Cost (in billions $): " + cost);
-
+		sub6.add(icon6);
+		sub6.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub6.add(costL);
 		
 		firstColumn.add(sub0);
@@ -194,21 +213,33 @@ public class OlympicGamePanel extends JPanel{
 		JPanel sub2 = new JPanel();
 		sub2.setLayout(new BoxLayout(sub2, BoxLayout.X_AXIS));
 		sub2.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon2 = new JLabel();
+		icon2.setIcon(new ImageIcon("icons/medal.png"));
 		JLabel events = new JLabel("Number of events: " + resultsGeneral.getJSONObject(0).getJSONObject("n_events").getInt("value"));
+		sub2.add(icon2);
+		sub2.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub2.add(events);
 		
 		// deleted
 		JPanel sub3 = new JPanel();
 		sub3.setLayout(new BoxLayout(sub3, BoxLayout.X_AXIS));
 		sub3.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon3 = new JLabel();
+		icon3.setIcon(new ImageIcon("icons/athlete.png"));
 		JLabel athletes = new JLabel("Number of athletes: " + resultsGeneral.getJSONObject(0).getJSONObject("n_athletes").getInt("value"));
+		sub3.add(icon3);
+		sub3.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub3.add(athletes);
 		
 		// deleted
 		JPanel sub4 = new JPanel();
 		sub4.setLayout(new BoxLayout(sub4, BoxLayout.X_AXIS));
 		sub4.setAlignmentX(LEFT_ALIGNMENT);
+		JLabel icon4 = new JLabel();
+		icon4.setIcon(new ImageIcon("icons/cup.png"));
 		JLabel disciplines = new JLabel("Number of disciplines: " + resultsGeneral.getJSONObject(0).getJSONObject("n_disciplines").getInt("value"));
+		sub4.add(icon4);
+		sub4.add(Box.createRigidArea(new Dimension(10, 0)));
 		sub4.add(disciplines);
 		
 		// deleted
@@ -216,7 +247,7 @@ public class OlympicGamePanel extends JPanel{
 		sub5.setLayout(new BoxLayout(sub5, BoxLayout.X_AXIS));
 		sub5.setAlignmentX(LEFT_ALIGNMENT);
 		JLabel icon5 = new JLabel();
-		icon5.setIcon(new ImageIcon("icons/gold.png"));
+		icon5.setIcon(new ImageIcon("icons/flag.png"));
 		JLabel countries = new JLabel("Number of countries: " + resultsGeneral.getJSONObject(0).getJSONObject("n_countries").getInt("value"));
 		sub5.add(icon5);
 		sub5.add(Box.createRigidArea(new Dimension(10, 0)));
