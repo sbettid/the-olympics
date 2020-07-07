@@ -14,7 +14,10 @@ public class TorchVisit {
 		this.noc = noc;
 		this.cityName = cityName;
 		this.order = order;
+		
 	}
+	
+	
 	/**
 	 * @return the noc
 	 */

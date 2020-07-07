@@ -18,7 +18,7 @@ public class OlympicsManager {
 		// create the frame
 		JFrame frame = new JFrame("The Olympics");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setPreferredSize(new Dimension(1135, 810));
+		frame.setPreferredSize(new Dimension(1135, 850));
 		frame.getContentPane().add(MainPanel.getMainPanel());
 		
 		// create menu bar and menu item

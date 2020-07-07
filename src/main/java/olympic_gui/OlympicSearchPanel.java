@@ -261,7 +261,6 @@ public class OlympicSearchPanel extends JPanel{
 		});
 		filterPanel.add(filter);
 		olympicPanel.add(filterPanel);
-		
 		add(olympicPanel);
 	}
 
